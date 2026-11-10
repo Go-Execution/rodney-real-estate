@@ -1,0 +1,9 @@
+{
+  "name": "rodneypeete-realestate-revamp",
+  "version": "1.0.0",
+  "description": "Ultra-luxury architectural real estate website for Rodney Peete (Dreams R Real), modeled after BCG Building Design with Lenis smooth scroll, GSAP ScrollTrigger, kinetic typography, horizontal pinned track, and bespoke micro-interactions.",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "node server.js"
+  }
+}
