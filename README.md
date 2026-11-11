@@ -67,14 +67,11 @@ All information from Rodney Peete's original website and career has been curated
 The website is fully built and self-contained with zero required build steps or complex dependencies:
 
 ```bash
-# Start the built-in HTTP server
-node server.js
+# Serve locally with any static HTTP server
+npx serve .
 ```
 
-Then open your browser to:
-```
-http://localhost:3000/
-```
+Then open your browser to the local URL printed by `serve`.
 
 ### File Hierarchy
 ```
@@ -84,9 +81,7 @@ rodney-real-estate/
 │   └── main.css        # Complete architectural design system & animations
 ├── js/
 │   └── app.js          # Lenis, GSAP ScrollTrigger, SplitText, Modals & Logic
-├── server.js           # Lightweight production-ready static server
-├── package.json        # Project metadata
-├── vercel.json         # Static deployment configuration for Vercel
+├── vercel.json         # Pure static deployment configuration for Vercel
 ├── .gitignore          # Git ignore rules
 └── README.md           # Documentation
 ```

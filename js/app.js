@@ -163,17 +163,28 @@
   }
 
   function splitIntoLines(element) {
-    const text = element.innerText.trim();
-    const words = text.split(/\s+/);
+    const tokens = [];
+    Array.from(element.childNodes).forEach(node => {
+      const cls = node.nodeType === Node.ELEMENT_NODE ? node.className : '';
+      const raw = (node.textContent || '').trim();
+      if (!raw) return;
+      raw.split(/\s+/).forEach(word => {
+        tokens.push({ word, cls });
+      });
+    });
+    if (!tokens.length) return;
+
     element.innerHTML = '';
 
-    // Create word spans to measure offsetTop
-    const wordSpans = words.map(word => {
+    // Create word spans to measure offsetTop (preserving inline highlight classes)
+    const wordSpans = tokens.map(({ word, cls }, idx) => {
       const span = document.createElement('span');
-      span.textContent = word + ' ';
+      if (cls) span.className = cls;
+      span.textContent = word;
       span.style.display = 'inline-block';
       element.appendChild(span);
-      return span;
+      if (idx < tokens.length - 1) element.appendChild(document.createTextNode(' '));
+      return { span, word, cls };
     });
 
     // Group into visual lines
@@ -181,26 +192,48 @@
     let currentLine = [];
     let currentTop = -1;
 
-    wordSpans.forEach(span => {
+    wordSpans.forEach(({ span, word, cls }) => {
       const top = span.offsetTop;
-      if (top !== currentTop) {
+      if (Math.abs(top - currentTop) > 2) {
         if (currentLine.length > 0) lines.push(currentLine);
-        currentLine = [span.textContent];
+        currentLine = [{ word, cls }];
         currentTop = top;
       } else {
-        currentLine.push(span.textContent);
+        currentLine.push({ word, cls });
       }
     });
     if (currentLine.length > 0) lines.push(currentLine);
 
     // Reconstruct with line masks
     element.innerHTML = '';
-    lines.forEach(lineWords => {
+    lines.forEach(lineTokens => {
       const maskDiv = document.createElement('span');
       maskDiv.className = 'split-line-mask';
       const innerDiv = document.createElement('span');
       innerDiv.className = 'split-line-inner';
-      innerDiv.textContent = lineWords.join('').trim();
+
+      let activeCls = null;
+      let activeSpan = null;
+
+      lineTokens.forEach(({ word, cls }, idx) => {
+        const suffix = idx < lineTokens.length - 1 ? ' ' : '';
+        if (cls) {
+          if (activeSpan && activeCls === cls) {
+            activeSpan.textContent += word + suffix;
+          } else {
+            activeSpan = document.createElement('span');
+            activeSpan.className = cls;
+            activeSpan.textContent = word + suffix;
+            activeCls = cls;
+            innerDiv.appendChild(activeSpan);
+          }
+        } else {
+          activeSpan = null;
+          activeCls = null;
+          innerDiv.appendChild(document.createTextNode(word + suffix));
+        }
+      });
+
       maskDiv.appendChild(innerDiv);
       element.appendChild(maskDiv);
     });
@@ -476,9 +509,13 @@
     mm.add('(min-width: 768px)', () => {
       // Calculate scroll distance dynamically
       const getDist = () => Math.max(0, row.scrollWidth - window.innerWidth + (window.innerWidth * 0.08));
-      const distance = getDist();
-      const totalScrollHeight = Math.max(window.innerHeight * 2.5, distance + window.innerHeight * 0.9);
-      track.style.height = `${totalScrollHeight}px`;
+      const setTrackHeight = () => {
+        const distance = getDist();
+        const totalScrollHeight = Math.max(window.innerHeight * 2.5, distance + window.innerHeight * 0.9);
+        track.style.height = `${totalScrollHeight}px`;
+      };
+      setTrackHeight();
+      ScrollTrigger.addEventListener('refreshInit', setTrackHeight);
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -518,6 +555,10 @@
           });
         }
       });
+
+      return () => {
+        ScrollTrigger.removeEventListener('refreshInit', setTrackHeight);
+      };
     });
 
     mm.add('(max-width: 767px)', () => {
