@@ -655,6 +655,21 @@ button {
   color: var(--color-accent-light);
 }
 
+.hero-slogan-callout {
+  margin-top: 1.5rem;
+  padding-left: 1.15rem;
+  border-left: 2px solid var(--color-accent);
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1.85vw, 1.75rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-accent-light);
+  letter-spacing: 0.005em;
+  max-width: 38ch;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
 /* Floating Architectural Spotlight Card in Hero */
 .hero-spotlight-card {
   background: rgba(18, 20, 22, 0.65);
@@ -1043,6 +1058,148 @@ button {
   gap: 2rem;
   padding-top: 2rem;
   border-top: 1px solid var(--color-light-border);
+}
+
+/* ==========================================================================
+   SIGNATURE SLOGAN & SKYDIVING FEATURE (Full-Bleed Parallax Break)
+   ========================================================================== */
+
+.section_altitude {
+  position: relative;
+  min-height: clamp(580px, 86vh, 920px);
+  display: flex;
+  align-items: stretch;
+  padding-top: clamp(3rem, 5vw, 5rem);
+  padding-bottom: clamp(3.5rem, 6vw, 6rem);
+  overflow: hidden;
+  background-color: var(--color-dark);
+  color: #ffffff;
+}
+
+.altitude-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.altitude-bg img {
+  position: absolute;
+  top: -12%;
+  left: 0;
+  width: 100%;
+  height: 124%;
+  object-fit: cover;
+  object-position: center 30%;
+  will-change: transform;
+}
+
+.altitude-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 12, 18, 0.52) 0%,
+    rgba(9, 12, 18, 0.16) 38%,
+    rgba(9, 12, 18, 0.42) 64%,
+    rgba(9, 12, 18, 0.92) 100%
+  );
+  z-index: 1;
+}
+
+.altitude-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(8rem, 22vh, 18rem);
+}
+
+.altitude-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.altitude-content {
+  max-width: 1120px;
+}
+
+.altitude-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-light);
+  margin-bottom: 1rem;
+}
+
+.altitude-slogan {
+  font-size: clamp(2.1rem, 4.8vw, 4.9rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  max-width: 21ch;
+  text-shadow: 0 6px 28px rgba(0, 0, 0, 0.48);
+}
+
+.altitude-footer-row {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+}
+
+.altitude-subcopy {
+  font-size: clamp(0.95rem, 1.15vw, 1.12rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 58ch;
+}
+
+.altitude-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1.75rem;
+  border-radius: 100px;
+  border: 1px solid var(--color-accent-light);
+  background: rgba(13, 14, 14, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.35s var(--ease-out-expo);
+}
+
+.altitude-cta-btn:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-dark);
+  transform: translateY(-2px);
 }
 
 /* Service Card Image Headers */
@@ -1588,18 +1745,20 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%;
 }
 
 .bio-portrait-tag {
   position: absolute;
   bottom: 2rem;
   left: 2rem;
-  padding: 1rem 1.5rem;
-  background: rgba(247, 246, 242, 0.9);
+  right: 2rem;
+  padding: 1rem 1.35rem;
+  background: rgba(247, 246, 242, 0.92);
   backdrop-filter: blur(8px);
   border: 1px solid var(--color-light-border);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1687,6 +1846,94 @@ button {
   font-size: 0.9rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
+}
+
+/* Personal Presence & National Recognition Gallery */
+.bio-media-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 2rem;
+  margin-top: clamp(3.5rem, 6vw, 5.5rem);
+  padding-top: clamp(3rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--color-light-border);
+  align-items: stretch;
+}
+
+.bio-editorial-card,
+.bio-award-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-light-border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s var(--ease-out-expo);
+}
+
+.bio-editorial-card:hover,
+.bio-award-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
+}
+
+.bio-editorial-img-wrap,
+.bio-award-img-wrap {
+  width: 100%;
+  height: clamp(270px, 31vw, 410px);
+  overflow: hidden;
+  position: relative;
+}
+
+.bio-editorial-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  transition: transform 0.7s var(--ease-out-expo);
+}
+
+.bio-editorial-card:hover .bio-editorial-img-wrap img {
+  transform: scale(1.04);
+}
+
+.bio-award-img-wrap {
+  background-color: #042b56;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+.bio-award-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.7s var(--ease-out-expo);
+}
+
+.bio-award-card:hover .bio-award-img-wrap img {
+  transform: scale(1.03);
+}
+
+.bio-media-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 1.15rem 1.4rem;
+  background-color: var(--color-bg-surface);
+  border-top: 1px solid var(--color-light-border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.bio-media-caption span:last-child {
+  color: var(--color-accent-dark);
+  font-weight: 700;
 }
 
 /* ==========================================================================
@@ -2019,6 +2266,15 @@ button {
   margin-bottom: 0.5rem;
 }
 
+.footer-slogan-line {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--color-accent-light);
+  line-height: 1.4;
+  margin-bottom: 0.85rem;
+}
+
 .footer-brand-desc {
   font-size: 0.85rem;
   line-height: 1.6;
@@ -2253,6 +2509,17 @@ button {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
+  .bio-media-showcase {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .bio-editorial-img-wrap {
+    height: clamp(280px, 50vw, 440px);
+  }
+  .bio-award-img-wrap {
+    height: auto;
+    aspect-ratio: 2162 / 1080;
+  }
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2334,6 +2601,15 @@ button {
   }
   .showcase-img-frame {
     height: clamp(280px, 45vh, 420px);
+  }
+  .section_altitude {
+    min-height: 540px;
+  }
+  .altitude-inner {
+    gap: clamp(6rem, 20vh, 10rem);
+  }
+  .altitude-bg img {
+    object-position: center 22%;
   }
   .featured-heading-row,
   .services-header,

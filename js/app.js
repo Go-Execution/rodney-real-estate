@@ -21,6 +21,7 @@
     initKineticSplitLines();
     initPreloader();
     initHeroParallax();
+    initAltitudeParallax();
     initNavbarThemeSwitch();
     initMobileMenu();
     initHorizontalScroll();
@@ -337,8 +338,8 @@
         delay: 0.1
       });
 
-      // Also reveal hero spotlight, description and metrics
-      gsap.from('.hero-spotlight-card, .hero-desc-text, .hero-metric-item', {
+      // Also reveal hero slogan, spotlight, description and metrics
+      gsap.from('.hero-slogan-callout, .hero-spotlight-card, .hero-desc-text, .hero-metric-item', {
         opacity: 0,
         y: 30,
         duration: 1,
@@ -364,6 +365,28 @@
       scrollTrigger: {
         trigger: heroSec,
         start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  }
+
+  // =========================================================================
+  // 5c. SKYDIVING ALTITUDE SECTION PARALLAX
+  // =========================================================================
+  function initAltitudeParallax() {
+    const altImg = document.querySelector('.altitude-bg img');
+    const altSec = document.querySelector('#promise');
+    if (!altImg || !altSec || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    gsap.fromTo(altImg, {
+      yPercent: -8
+    }, {
+      yPercent: 8,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: altSec,
+        start: 'top bottom',
         end: 'bottom top',
         scrub: true
       }
